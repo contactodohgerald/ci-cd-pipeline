@@ -15,14 +15,9 @@ class PostsTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
-
-        $this->assertAuthenticated();
-
-        $response = $this->post('/post', [
+        $response = $this
+        ->actingAs($user)
+        ->post('/post', [
             'user_id' => $user->id,
             'title' => "New Title",
             'category' => "Caetgory",
